@@ -235,6 +235,13 @@
     <xacro:default_inertial mass="1"/>
   </link>
 
+<link name="eye"/>
+ <joint name="box_to_eye" type="fixed">
+      <parent link="box"/>
+      <child link="eye"/>
+      <origin rpy="10 10 0" xyz="0 0 0"/>
+ </joint>
+
   <joint name="tobox" type="fixed">
     <parent link="head"/>
     <child link="box"/>
