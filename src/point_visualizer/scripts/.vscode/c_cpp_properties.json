@@ -1,0 +1,16 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/milrem/Desktop/carto_ws/install_isolated/include",
+        "/opt/ros/kinetic/include",
+        "/usr/include"
+      ],
+      "name": "Linux"
+    }
+  ]
+}
