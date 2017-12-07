@@ -23,7 +23,7 @@ def talker():
     x=0.0
     y=0.0
     pub = rospy.Publisher('chatter', PointStamped, queue_size=10)
-    rospy.Subscriber("/mouse_events", PowermateEvent, callback)
+    rospy.Subscriber("events", PowermateEvent, callback)
     rospy.init_node('talker', anonymous=True)
 
 

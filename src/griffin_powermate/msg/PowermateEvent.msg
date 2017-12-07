@@ -1,7 +1,7 @@
 # name 
 string name
 
-# Dirction values can be -1 for counter-clockwise, 0 for no, and 1 clockwise rotation
+# Direction values can be -1 for counter-clockwise, 0 for no, and 1 clockwise rotation
 int8 direction
 
 # Sum of direction values since the launch of the node

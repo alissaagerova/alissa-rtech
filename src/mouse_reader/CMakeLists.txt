@@ -108,6 +108,9 @@ catkin_package(
 ###########
 ## Build ##
 ###########
+add_executable(mouse_reader src/mouse_reader.cpp)
+target_link_libraries(mouse_reader ${catkin_LIBRARIES})
+add_dependencies(mouse_reader mouse_reader_generate_messages_cpp)
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
