@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/home/milrem/alissa-rtech/devel/include",
+                    "/home/milrem/Desktop/carto_ws/install_isolated/include",
+                    "/home/milrem/wingman/ros/devel/include",
+                    "/opt/ros/kinetic/include",
+                    "/home/milrem/alissa-rtech/src/griffin_powermate/include",
+                    "/home/milrem/alissa-rtech/src/keyboard_reader/include",
+                    "/usr/include"
+                ]
+            },
+            "includePath": [
+                "/home/milrem/alissa-rtech/devel/include",
+                "/home/milrem/Desktop/carto_ws/install_isolated/include",
+                "/home/milrem/wingman/ros/devel/include",
+                "/opt/ros/kinetic/include",
+                "/home/milrem/alissa-rtech/src/griffin_powermate/include",
+                "/home/milrem/alissa-rtech/src/keyboard_reader/include",
+                "/usr/include"
+            ],
+            "name": "Linux",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 3
+}

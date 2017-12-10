@@ -1,8 +1,8 @@
 # name 
-string name
+int64 value
 
 # Direction values can be -1 for counter-clockwise, 0 for no, and 1 clockwise rotation
-int8 direction
+string direction
 
 # Sum of direction values since the launch of the node
 int64 integral

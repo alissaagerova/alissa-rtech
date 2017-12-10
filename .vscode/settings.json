@@ -1,0 +1,8 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/milrem/alissa-rtech/devel/lib/python2.7/dist-packages",
+        "/home/milrem/Desktop/carto_ws/install_isolated/lib/python2.7/dist-packages",
+        "/home/milrem/wingman/ros/devel/lib/python2.7/dist-packages",
+        "/opt/ros/kinetic/lib/python2.7/dist-packages"
+    ]
+}

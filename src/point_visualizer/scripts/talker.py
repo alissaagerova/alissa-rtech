@@ -4,34 +4,26 @@ import rospy
 from geometry_msgs.msg import PointStamped
 from griffin_powermate.msg import PowermateEvent
 
-def callback(data):
-    '''velocity_converter Callback Function'''
-    point = PointStamped()
-    if data.name == "X":
-	x = x+data.direction*0.1
-    if data.name == "Y":
-	y = y+data.direction*0.1
-    point.point.x = x
-    point.point.y = y
-    point.header.frame_id="base_link"
-    pub.publish(point)
+class PointVisualiser:
+    def __init__(self):
+        self.x = 0.0
+        self.y = 0.0
+        self.pub = rospy.Publisher('chatter', PointStamped, queue_size=10)
+        rospy.Subscriber("events", PowermateEvent, self.callback)
+        rospy.init_node('talker', anonymous=True)
 
-def talker():
-    global pub
-    global x
-    global y
-    x=0.0
-    y=0.0
-    pub = rospy.Publisher('chatter', PointStamped, queue_size=10)
-    rospy.Subscriber("events", PowermateEvent, callback)
-    rospy.init_node('talker', anonymous=True)
-
+    def callback(self, data):
+        point = PointStamped()
+        if data.direction == "X":
+            self.y = self.y - data.value * 0.01
+        if data.direction == "Y":
+            self.x = self.x - data.value * 0.01
+        point.point.x = self.x
+        point.point.y = self.y
+        point.header.frame_id = "base_link"
+        self.pub.publish(point)
 
 
 if __name__ == '__main__':
-    try:
-        talker()
-    except rospy.ROSInterruptException:
-        pass
+    visualiser = PointVisualiser()
     rospy.spin()
-

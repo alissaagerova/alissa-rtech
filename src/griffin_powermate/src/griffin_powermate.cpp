@@ -171,131 +171,58 @@ void PowerMate::processEvent(struct input_event *ev, ros::Publisher& ros_publish
   // Switch to a case based on the event type
   switch(ev->type)
   {
-    case EV_SYN:				// no need to do anything
-//      printf("SYN REPORT\n");
-      break; 
-    case EV_MSC:				// unused for this ROS publisher
- //     ROS_INFO("The LED pulse settings were changed; code=0x%04x, value=0x%08x\n", ev->code, ev->value);
-      break;
-      
     case EV_REL:				// Upon receiving rotation data
       if(ev->code == REL_X)
-      {
-		 ROS_INFO("X; code=0x%04x, value=0x%08x\n", ev->code, ev->value);
-		      
-		// Reads direction value from turn knob
-		signed char dir = (signed char)ev->value;
-		// Sums consecutive dir values to find integral
-		integral_ += (long long)dir;
-		// Composing a ros_message
-		ros_message.name = "X";
-		ros_message.direction = dir;
-		ros_message.integral = integral_;
-		ros_message.is_pressed = pressed_;
-		ros_message.push_state_changed = false;
-		// Publish ros_message
-		ros_publisher.publish( ros_message );
-		//printf("Button was rotated %d units; Shift from start is now %d units\n", (int)ev->value, total_shift);
-      }
-		       
-      if(ev->code == REL_Y)
-      {
-		 ROS_INFO("Y; code=0x%04x, value=0x%08x\n", ev->code, ev->value);
-		 
-		// Reads direction value from turn knob
-		signed char dir = (signed char)ev->value;
-		// Sums consecutive dir values to find integral
-		integral_ += (long long)dir;
-		// Composing a ros_message
-		ros_message.name = "Y";
-		ros_message.direction = dir;
-		ros_message.integral = integral_;
-		ros_message.is_pressed = pressed_;
-		ros_message.push_state_changed = false;
-		// Publish ros_message
-		ros_publisher.publish( ros_message );
-		//printf("Button was rotated %d units; Shift from start is now %d units\n", (int)ev->value, total_shift);
-      }
-		 
-      if(ev->code == REL_WHEEL)
-      {
-		 ROS_INFO("Wheel; code=0x%04x, value=0x%08x\n", ev->code, ev->value);
-		 
-		// Reads direction value from turn knob
-		signed char dir = (signed char)ev->value;
-		// Sums consecutive dir values to find integral
-		integral_ += (long long)dir;
-		// Composing a ros_message
-		ros_message.name = "REL_WHEEL";
-		ros_message.direction = dir;
-		ros_message.integral = integral_;
-		ros_message.is_pressed = pressed_;
-		ros_message.push_state_changed = false;
-		// Publish ros_message
-		ros_publisher.publish( ros_message );
-		//printf("Button was rotated %d units; Shift from start is now %d units\n", (int)ev->value, total_shift);
-      }
-		 	  
-      break;
-      
-    case EV_KEY:				// Upon receiving data about pressing and depressing the dial button
-      if(ev->code == BTN_LEFT )
-      {
-      	printf("LEFT Button was %s\n", ev->value? "pressed":"released");
-      	printf("codes and values;  code=0x%04x, value=0x%08x\n", ev->code, ev->value);
-      	
-      	// reads EV_KEY value, converts it to bool
-		pressed_ = (bool)ev->value;
-		// Composing a ros_message
-		ros_message.name = "BTN_LEFT";
-		ros_message.direction = 0;
-		ros_message.integral = integral_;
-		ros_message.is_pressed = pressed_;
-		ros_message.push_state_changed = true;
-		// Publish ros_message
-		ros_publisher.publish( ros_message );
-		//printf("Button was %s\n", ev->value? "pressed":"released");
-      }
-      if(ev->code == BTN_RIGHT )
-      {
-      	printf("RIGHT Button was %s\n", ev->value? "pressed":"released");
-      	printf("codes and values;  code=0x%04x, value=0x%08x\n", ev->code, ev->value);
-      	
-      	// reads EV_KEY value, converts it to bool
-		pressed_ = (bool)ev->value;
-		// Composing a ros_message
-		ros_message.name = "BTN_RIGHT";
-		ros_message.direction = 0;
-		ros_message.integral = integral_;
-		ros_message.is_pressed = pressed_;
-		ros_message.push_state_changed = true;
-		// Publish ros_message
-		ros_publisher.publish( ros_message );
-		//printf("Button was %s\n", ev->value? "pressed":"released");
-      }
-      if(ev->code == BTN_MIDDLE )
-      {
-      	printf("MIDDLE Button was %s\n", ev->value? "pressed":"released");
-      	printf("codes and values;  code=0x%04x, value=0x%08x\n", ev->code, ev->value);
-      	
-      	// reads EV_KEY value, converts it to bool
-		pressed_ = (bool)ev->value;
-		// Composing a ros_message
-		ros_message.name = "BTN_MIDDLE";
-		ros_message.direction = 0;
-		ros_message.integral = integral_;
-		ros_message.is_pressed = pressed_;
-		ros_message.push_state_changed = true;
-		// Publish ros_message
-		ros_publisher.publish( ros_message );
-		//printf("Button was %s\n", ev->value? "pressed":"released");
-      	
-      }
-      break;
-      
+	{
+	ROS_INFO("You moved your mouse horizontally!; code=0x%04x, value=0x%08x\n", ev->code, ev->value);
+	ros_message.direction = 'X';
+ros_message.value = ev->value;
+	ros_publisher.publish( ros_message );
+	}
 	
-	  default:					// default case
-        ROS_WARN("Unexpected event type; ev->type = 0x%04x\n", ev->type);
+      else if(ev->code == REL_Y)
+{
+
+	ROS_INFO("You moved your mouse vertically!; code=0x%04x, value=0x%08x\n", ev->code, ev->value);
+ros_message.direction = 'Y';
+ros_message.value = ev->value;
+	ros_publisher.publish( ros_message );
+}
+	
+      else
+      {
+	// Reads direction value from turn knob
+	signed char dir = ev->value;
+	// Sums consecutive dir values to find integral
+	integral_ += (long long)dir;
+	// Composing a ros_message
+	ros_message.value = integral_;
+	ros_message.is_pressed = pressed_;
+	// Publish ros_message
+	ros_publisher.publish( ros_message );
+	//printf("Button was rotated %d units; Shift from start is now %d units\n", (int)ev->value, total_shift);
+      }
+      break;
+    case EV_KEY:				// Upon receiving data about pressing and depressing the dial button
+if(ev->code == BTN_LEFT)
+	{
+	ROS_INFO("You clicked the left mouse button!; code=0x%04x, value=0x%08x\n", ev->code, ev->value);
+	
+ros_message.value = ev->value;
+ros_message.is_pressed = true;
+	ros_publisher.publish( ros_message );
+	}
+if(ev->code == BTN_RIGHT)
+	{
+	ROS_INFO("You clicked the right mouse button!; code=0x%04x, value=0x%08x\n", ev->code, ev->value);
+ros_message.value = (signed char)ev->value;
+ros_message.is_pressed = true;
+	ros_publisher.publish( ros_message );
+	}
+      
+      break;
+    default:					// default case
+      ROS_WARN("Unexpected event type; ev->type = 0x%04x\n", ev->type);
   } // end switch
 
   fflush(stdout);
@@ -368,7 +295,7 @@ int main(int argc, char *argv[])
   }
 
   // Creates publisher that advertises griffin_powermate::PowermateEvent messages on topic /griffin_powermate/events
-  ros::Publisher pub_powermate_events = pnh.advertise<griffin_powermate::PowermateEvent>("events", 100);
+  ros::Publisher pub_powermate_events = pnh.advertise<griffin_powermate::PowermateEvent>("/events", 100);
   
   // After PowerMate is succesfully opened, read its input, publish ROS messages, and spin.
   powermate.spinPowerMate(pub_powermate_events);
@@ -378,6 +305,3 @@ int main(int argc, char *argv[])
 
   return 0;
 } //end main
-
-
-
