@@ -2,3 +2,7 @@
 	path = motoman
 	url = https://github.com/ros-industrial/motoman.git
 	branch = indigo
+[submodule "src/motoman"]
+	path = src/motoman
+	url = https://github.com/ros-industrial/motoman.git
+	branch = indigo
