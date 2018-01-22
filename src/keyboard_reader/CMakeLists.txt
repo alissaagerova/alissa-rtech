@@ -54,3 +54,5 @@ add_dependencies(keyboard_reader ${catkin_EXPORTED_TARGETS})
 add_executable(keyboard_event_publisher src/keyboard_event_publisher.cpp)
 target_link_libraries(keyboard_event_publisher ${catkin_LIBRARIES} keyboard_reader)
 add_dependencies(keyboard_event_publisher keyboard_reader_gencpp ${catkin_EXPORTED_TARGETS})
+
+
