@@ -2,7 +2,7 @@
 import rospy
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
-from Key.msg import Key
+from keyboard_reader.msg import Key
 
 movement = False
 
